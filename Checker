@@ -1,0 +1,101 @@
+using System;
+
+namespace PasswordChecker
+{
+  class Program
+  {
+    public static void Main(string[] args)
+    {
+Console.WriteLine("\nHi there. You need a new password, my friend. Please input your new password here (make sure it's secure, buddy):\n");
+string password = Console.ReadLine();
+//new password accepted
+
+int minLength = 8;
+string uppercase = "ALL";
+string lowercase = "all";
+string digits = "0123456789";
+string specialChars = "?/%&";
+
+int score = 0; //initial score
+
+/* Now we increase the score by one for every check that the password passes: 
+- minimum length > 8 characters
+- contains special characers
+- contains lowercase
+- contains uppercase
+- contains digits 
+OPTIMUM score = 5 */
+
+
+if (password.Length >= minLength)
+{
+score ++;
+  } //score+1 for password length above 8 characters
+
+bool charcheck = Tools.Contains(password, "!£$%^&*/@|><()+-=-"); //returns true or false for special characters
+if (charcheck == true)
+{
+  score ++;
+} //score+1 for containing special characters
+
+
+string passUpper = password.ToUpper();
+if (password != passUpper)
+{
+  score++;
+} //score+1 if password contains any lowercase
+
+
+if (password != password.ToLower())
+{
+  score++;
+} //score+1 if password contains any uppercase
+
+
+bool digitsHas = Tools.Contains(password, digits);
+if (digitsHas == true)
+{
+  score++;
+} //Score+1 for digits
+
+
+switch (password)
+{
+  case "password": case "Password": case "1234": case "password1234": case "Password1234":
+  score = 0;
+  Console.WriteLine("\n\nNu uh. \nWhat you doing choosing a password like that? \nYou been hiding under a rock?\n");
+  break;
+  default:
+  break;
+}
+
+
+
+
+Console.WriteLine("\nYour score is "+ score);
+
+switch (score)
+{
+  case 1:
+  Console.WriteLine("\nFor scores of 1, the password is fairly weak.");
+  break;
+  case 2:
+  Console.WriteLine("\nFor scores of 2, the password is weak");
+  break;
+  case 3:
+  Console.WriteLine("\nFor scores of 3, the password is medium");
+  break;
+  case 4: case 5:
+  Console.WriteLine("\nFor scores of 4 and 5, the password is strong");
+  break;
+  default:
+  Console.WriteLine("\nIf you did not receive a score between 1 and 5, the password does not meet any of the requirements");
+  break;
+}
+
+
+
+
+    }
+  }
+}
